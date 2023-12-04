@@ -19,4 +19,5 @@ Comando a utilizar:
 Ejecucion de pruebas:
 
 1. python -m unittest tests/test_nueva_cuenta.py
-2. python -m unittest tests/test_ingreso_cuenta.py    
+2. python -m unittest tests/test_ingreso_cuenta.py
+3. python -m unittest tests/test_salida_cuenta.py      

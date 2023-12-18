@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: 'prueba de una lambda'
+
+Resource:
+  PruebaLambda:
+    Type: 'AWS::Serverless::Funtion'
+    Properties:
+      FuntionName: LAMBDA_DEV
+      Handler: lambda_funtion.lambda_handler
+      Tracing: Active
+      Runtime: python3.8
+      CodeUri: .
+      Descripcion: 'prueba de una lambda'
+      MemorySize: 1024
+      Timeout: 60
+      Arquitectures:
+        - x86_64
+      Role: 'arn:aws:iam::632357775273:role/LAMBDA_DEV'
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-025e4576c28b9f198
+        SubnetIds:
+          - subnet-01fe369d82cc0cd97
+          - subnet-0061fd26604aaf100
+ 

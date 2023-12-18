@@ -1,0 +1,9 @@
+{
+    "RollbackTriggers": [
+      {
+        "Arn": "arn:aws:cloudwatch:us-east-1:632357775273:alarm:ccb-cloudformation-rollbackevents",
+        "Type": "AWS::CloudWatch::Alarm"
+      }
+    ],
+    "MonitoringTimeInMinutes": 5
+  }

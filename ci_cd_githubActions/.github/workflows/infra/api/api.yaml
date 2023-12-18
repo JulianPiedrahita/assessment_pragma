@@ -1,0 +1,975 @@
+---
+    swagger: "2.0"
+    info:
+      description: "API Gateway de FacePhi"
+      version: "2023-10-06T23:12:01Z"
+      title: "CCB_APIGW-FACEPHI_API"
+    host: "f1yenfsg6h.execute-api.us-east-1.amazonaws.com"
+    basePath: "/dcordova"
+    schemes:
+    - "https"
+    paths:
+      /authenticate/facial:
+        post:
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          security:
+          - BMAuthorizerToken:
+            - "CCB-BM/read"
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_POST_AUTHENTICATE_FACIAL/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /authenticate/user:
+        post:
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+          security:
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_POST_AUTHENTICATE_USER/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /biometric/template/auth:
+        put:
+          responses:
+            "200":
+              description: "200 response"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          security:
+          - BMAuthorizerToken:
+            - "CCB-BM/read"
+            - "CCB-BM/write"
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_PUT_AUTH_BIOMETRIC_TEMPLATE/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,PUT'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /biometric/template/check:
+        put:
+          responses:
+            "200":
+              description: "200 response"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          security:
+          - BMAuthorizerToken:
+            - "CCB-BM/read"
+            - "CCB-BM/write"
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_PUT_CHECK_BIOMETRIC_TEMPLATE/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,PUT'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /biometric/template/consent:
+        put:
+          responses:
+            "200":
+              description: "200 response"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          security:
+          - BMAuthorizerToken:
+            - "CCB-BM/read"
+            - "CCB-BM/write"
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_PUT_CONSENT_BIOMETRIC_TEMPLATE/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,PUT'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /biometric/template/raw:
+        put:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,PUT'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /evaluate/passiveLivenessToken:
+        post:
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          security:
+          - BMAuthorizerToken:
+            - "CCB-BM/read"
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_POST_EVALUATE_PASSIVE_LIVENESS_TOKEN/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /extract/document/data:
+        post:
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          security:
+          - BMAuthorizerToken:
+            - "CCB-BM/read"
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_POST_EXTRACT_DOCUMENT_DATA/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /extract/document/dataWeb:
+        post:
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          security:
+          - BMAuthorizerToken:
+            - "CCB-BM/read"
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_POST_EXTRACT_DOCUMENT_DATA_WEB/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /finish/tracking:
+        post:
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          security:
+          - BMAuthorizerToken:
+            - "CCB-BM/read"
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_POST_FINISH_TRACKING/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /system/data:
+        get:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'GET,OPTIONS'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /update/user/template:
+        put:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,PUT'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /validate/civil:
+        post:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /validate/request:
+        post:
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          security:
+          - BMAuthorizerToken:
+            - "CCB-BM/read"
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_POST_VALIDATE_REQUEST/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /validate/response:
+        post:
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          security:
+          - BMAuthorizerToken:
+            - "CCB-BM/read"
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_POST_VALIDATE_RESPONSE/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /verify/document/validation/data:
+        post:
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          security:
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_POST_VERIFY_DOCUMENT_VALIDATION_DATA/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /verify/document/validation/start:
+        post:
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          security:
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_POST_VERIFY_DOCUMENT_VALIDATION_START/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+      /verify/document/validation/status:
+        post:
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+          security:
+          - api_key: []
+          x-amazon-apigateway-integration:
+            httpMethod: "POST"
+            uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:632357775273:function:CCB_LAMBDA_POST_VERIFY_DOCUMENT_VALIDATION_STATUS/invocations"
+            responses:
+              default:
+                statusCode: "200"
+            passthroughBehavior: "when_no_match"
+            contentHandling: "CONVERT_TO_TEXT"
+            type: "aws_proxy"
+        options:
+          consumes:
+          - "application/json"
+          produces:
+          - "application/json"
+          responses:
+            "200":
+              description: "200 response"
+              schema:
+                $ref: "#/definitions/Empty"
+              headers:
+                Access-Control-Allow-Origin:
+                  type: "string"
+                Access-Control-Allow-Methods:
+                  type: "string"
+                Access-Control-Allow-Headers:
+                  type: "string"
+          x-amazon-apigateway-integration:
+            responses:
+              default:
+                statusCode: "200"
+                responseParameters:
+                  method.response.header.Access-Control-Allow-Methods: "'OPTIONS,POST'"
+                  method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+                  method.response.header.Access-Control-Allow-Origin: "'*'"
+            requestTemplates:
+              application/json: "{\"statusCode\": 200}"
+            passthroughBehavior: "when_no_match"
+            type: "mock"
+    securityDefinitions:
+      api_key:
+        type: "apiKey"
+        name: "x-api-key"
+        in: "header"
+      BMAuthorizerToken:
+        type: "apiKey"
+        name: "Authorization"
+        in: "header"
+        x-amazon-apigateway-authtype: "cognito_user_pools"
+        x-amazon-apigateway-authorizer:
+          providerARNs:
+          - "arn:aws:cognito-idp:us-east-1:632357775273:userpool/us-east-1_SU1CBN15W"
+          type: "cognito_user_pools"
+    definitions:
+      Empty:
+        type: "object"
+        title: "Empty Schema"
+    x-amazon-apigateway-endpoint-configuration:
+      disableExecuteApiEndpoint: true

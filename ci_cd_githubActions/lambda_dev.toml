@@ -1,0 +1,11 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "CcbLambdaGetSystemDataDateRelease"
+s3_bucket = "ccb-aws-facephi-api"
+s3_prefix = "ccb-s3-system-data-lambda"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM CAPABILITY_AUTO_EXPAND"
+disable_rollback = false
+region = "us-east-1"

@@ -143,6 +143,13 @@
             Aseguramiento de Calidad y DevSecOps
 
             Gestión de datos
++ IaC:
+  terraform init # Inicializa el proyecto
+  terraform plan # Muestra los cambios que se van a hacer
+  terraform apply # Aplica los cambios
+  terraform destroy # Destruye los recursos creados
+  terraform fmt # Formatea el código
+  terraform validate # Valida el código  
 
 + Estrategias de despliegue:
 

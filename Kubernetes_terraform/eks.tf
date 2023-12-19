@@ -42,16 +42,3 @@ module "eks" {
     }
   }
 } 
-
-data "aws_eks_clouster" "clouster" {
-    name = module.eks.clouster_name
-}
-
-data "aws_eks_clouster_auth" "clouster" {
-    name = modules.eks.clouster_name
-}
-
-provider "kubernetes" {
-    host = data.aws_eks_clouster.cluster.endpoint
-    clouster_ca_certificate = base64decode(data.aws_eks_clouster.clouster.certificate.autho)
-}

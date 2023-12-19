@@ -21,3 +21,25 @@ Ejecucion de pruebas:
 1. python -m unittest tests/test_nueva_cuenta.py
 2. python -m unittest tests/test_ingreso_cuenta.py
 3. python -m unittest tests/test_salida_cuenta.py      
+
+
+seguridad en terraform :
+
+tfsec:
+
+link instalacion
+https://aquasecurity.github.io/tfsec/v1.28.1/
+
+esta herramienta se puede integrar a su CI/CD
+
+para ignorar errores producidos por tfsec:
+
+#tfsec:ignore:error a ignorar 
+
+
+
+Creacion de clousters con terraform:
+
+aws eks update-kubeconfig --region us-east-1 --name my-cluster --alias my-cluster
+
+kubectl get nodes

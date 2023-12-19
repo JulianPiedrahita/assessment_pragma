@@ -1,0 +1,21 @@
+name: "Pull request pre-checks"
+on:
+  pull_request:
+    branches: ["main"]
+    paths: ["IaC_terraform/**"]
+
+jobs:
+  pre-checks:
+    name: 'pre-check'
+    runs-on: ubuntu-latest
+    environment: IacTerraform
+    if: github.ref == 'refs/heads/release'
+    defaults:
+      run:
+        working-directory: ./lambda_dev
+    steps: 
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+
+      - name: tfsec
+        uses: aquasecurity/tfsec-action@v1.0.0

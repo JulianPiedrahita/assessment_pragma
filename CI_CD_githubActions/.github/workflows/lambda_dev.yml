@@ -1,0 +1,90 @@
+name: "LambdaDev"
+on:
+  push:
+    branches: ["main"]
+    paths: ["lambda_dev/**"]
+
+permissions:
+  id-token: write   
+  contents: read          
+        
+jobs:
+  Upload-s3-release:
+    runs-on: ubuntu-latest
+    environment: CcbLambdaGetSystemDataDate
+    if: github.ref == 'refs/heads/release'
+    defaults:
+      run:
+        working-directory: ./lambda_dev
+    steps: 
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      - name: Connect to AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Upload Dir to S3 
+        run: aws s3 sync ./ s3://ccb-aws-facephi-api/ccb-lambda-get-system-data-date
+        env:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  
+      - name: Git clone the repository
+        uses: actions/checkout@v4
+  
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.OIDC_GITHUB }}
+          role-session-name: samplerolesession
+          aws-region: ${{ vars.AWS_REGION }}
+  
+  Build-deploy-lambda-release:
+    needs: [Upload-s3-release]
+    runs-on: ubuntu-latest
+    environment: CcbLambdaGetSystemDataDate
+    if: github.ref == 'refs/heads/release'
+    defaults:
+      run:
+        working-directory: ./lambda_dev
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+      - uses: aws-actions/setup-sam@v2
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-session-token: ${{ secrets.AWS_SESSION_TOKEN }}
+          aws-region: ${{ vars.AWS_REGION }}      
+
+      - name: Build an Deploy lambda with sam system data
+        run: |
+          sam build --use-container
+          sam deploy  --config-file ../lambda_dev.toml --no-confirm-changeset --no-fail-on-empty-changeset --stack-name ${{ vars.STACK_NAME }} 
+      - name: Enable Termination Protection
+        run: |
+          aws cloudformation update-termination-protection --enable-termination-protection --stack-name ${{ vars.STACK_NAME }} --region ${{ vars.AWS_REGION }}
+          echo " Configuro update-termination-protection !!"
+          aws cloudformation set-stack-policy --stack-name ${{ vars.STACK_NAME }} --stack-policy-body file://../.github/workflows/infra/cloudformation/stack-policy.json
+          echo " Configuro update-stack-policy !!" 
+      - run: awk -v var1="${{ secrets.ACCOUNT_ID }}" -v var2="${{ vars.AWS_REGION }}" '{ gsub(/account-id/,var1); gsub(/us-east-1/,var2); print }' ../.github/workflows/infra/cloudformation/rollback-config.json > ../.github/workflows/infra/cloudformation/rollback-config_new.json && mv ../.github/workflows/infra/cloudformation/rollback-config_new.json ../.github/workflows/infra/cloudformation/rollback-config.json
+      - name: Enable Rollback y SNS 
+        run: | 
+          stack_status=$(aws cloudformation describe-stacks --stack-name ${{ vars.STACK_NAME }} --query "Stacks[0].StackStatus" --output text)
+          if [ "$stack_status" != "UPDATE_COMPLETE" || "$stack_status" != "CREATE_COMPLETE" ]; then
+            aws cloudformation create-change-set --stack-name ${{ vars.STACK_NAME }} --change-set-name rollback-change-set --template-body file://template.yaml
+            aws cloudformation execute-change-set --change-set-name rollback-change-set
+
+            aws cloudformation update-stack --stack-name ${{ vars.STACK_NAME_RELEASE }} --use-previous-template --capabilities CAPABILITY_IAM CAPABILITY_AUTO_EXPAND CAPABILITY_NAMED_IAM --rollback-configuration file://../.github/workflows/infra/cloudformation/rollback-config.json
+            aws cloudformation describe-stacks --stack-name ${{ vars.STACK_NAME_RELEASE }}
+             echo " Configuro rollback y SNS notification options!!" 
+          fi
+          
+
+ 

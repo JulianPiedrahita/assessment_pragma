@@ -7,7 +7,7 @@ variable "region" {
 variable "server_type" {
   type        = string
   description = "Instance type"
-  default     = "t3.micro"
+  default     = "t2.micro"
 }
 
 variable "public_server_count" {
